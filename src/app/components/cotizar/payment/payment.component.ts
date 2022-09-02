@@ -10,36 +10,36 @@ import { Oneclick,Options, IntegrationApiKeys, Environment, IntegrationCommerceC
   styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
-  
-  stripePayment= {return_url: 'https://mudy-new.vercel.app/'};
+
+  stripePayment= {return_url: 'http://www.mudy.itsirius.com/'};
   dataPayment:{ url?: any, token_ws?:any } = {};
-  
+
   @ViewChild('startForm') startForm!: ElementRef;
-  
+
   constructor(
     private postService: PostRequestService,
     private http: HttpClient,
-    ) { this.payment() }  
+    ) { this.payment() }
 
-  ngOnInit(): void {    
-  }  
-  
+  ngOnInit(): void {
+  }
+
 
   async payment() {
-    
+
     await this.postService.payment(this.stripePayment)
     .then(res => {
       this.dataPayment={
         url:res.data.url,
         token_ws: res.data.token,
       }
-      
+
     })
   }
-  
+
   async onSubmit(event: Event){
     console.log(`url: ${this.dataPayment.url} / token:${this.dataPayment.token_ws}`)
     this.startForm.nativeElement.submit();
-    
-  }  
+
+  }
 }
